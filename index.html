@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Archive</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f5;
+            --card-bg: #ffffff;
+            --text-main: #18181b;
+            --text-muted: #71717a;
+            --accent: #2563eb;
+            --border: #e4e4e7;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 { font-size: 1.8rem; font-weight: 700; }
+
+        nav button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+
+        nav button.active { color: var(--accent); }
+
+        /* Read Section */
+        .filters {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card-bg);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        /* Write Section */
+        #write-section { display: none; }
+
+        form {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        textarea { resize: vertical; min-height: 150px; }
+
+        .submit-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .submit-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>The Archive</h1>
+        <nav>
+            <button id="nav-read" class="active" onclick="switchTab('read')">Read</button>
+            <button id="nav-write" onclick="switchTab('write')">Write</button>
+        </nav>
+    </header>
+
+    <!-- READ SECTION -->
+    <main id="read-section">
+        <div class="filters" id="filter-container">
+            <!-- Filter buttons injected here -->
+        </div>
+        <div class="grid" id="articles-grid">
+            <!-- Articles injected here -->
+        </div>
+    </main>
+
+    <!-- WRITE SECTION -->
+    <main id="write-section">
+        <form id="publish-form">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="title" required>
+            </div>
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" id="author" required>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="category" required>
+                    <option value="Music Production">Music Production</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Football">Football</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea id="content" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Publish Article</button>
+        </form>
+    </main>
+</div>
+
+<script>
+    // Sample Data
+    let articles = [
+        {
+            title: "Mastering the Mix: Logic Pro Workflows",
+            author: "Romén",
+            category: "Music Production",
+            date: "July 18, 2026",
+            content: "Setting up a clean routing matrix in Logic Pro can save you hours of CPU load, especially when stacking multiple heavy plugins on an M2 chip."
+        },
+        {
+            title: "Evaluating Player Roles Beyond xG",
+            author: "Romén",
+            category: "Football",
+            date: "July 12, 2026",
+            content: "Traditional stats often miss the off-the-ball impact of defensive midfielders. By building a custom rating system, we can better evaluate true pitch value."
+        },
+        {
+            title: "Cleaning Messy Datasets in Python",
+            author: "Lucia",
+            category: "Data Science",
+            date: "July 05, 2026",
+            content: "A quick guide on using Pandas to drop nulls, handle duplicates, and normalize text fields before feeding your data into a predictive model."
+        }
+    ];
+
+    let currentFilter = 'All';
+
+    function renderArticles() {
+        const grid = document.getElementById('articles-grid');
+        grid.innerHTML = '';
+
+        const filtered = currentFilter === 'All' 
+            ? articles 
+            : articles.filter(a => a.category === currentFilter);
+
+        filtered.forEach(article => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <span class="card-category">${article.category}</span>
+                <h2 class="card-title">${article.title}</h2>
+                <div class="card-meta">By ${article.author} • ${article.date}</div>
+                <p>${article.content}</p>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function renderFilters() {
+        const container = document.getElementById('filter-container');
+        container.innerHTML = '';
+        
+        const categories = ['All', ...new Set(articles.map(a => a.category))];
+        
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = `filter-btn ${currentFilter === cat ? 'active' : ''}`;
+            btn.innerText = cat;
+            btn.onclick = () => {
+                currentFilter = cat;
+                renderFilters();
+                renderArticles();
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function switchTab(tab) {
+        document.getElementById('read-section').style.display = tab === 'read' ? 'block' : 'none';
+        document.getElementById('write-section').style.display = tab === 'write' ? 'block' : 'none';
+        
+        document.getElementById('nav-read').className = tab === 'read' ? 'active' : '';
+        document.getElementById('nav-write').className = tab === 'write' ? 'active' : '';
+    }
+
+    // Handle Form Submission
+    document.getElementById('publish-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const newArticle = {
+            title: document.getElementById('title').value,
+            author: document.getElementById('author').value,
+            category: document.getElementById('category').value,
+            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+            content: document.getElementById('content').value
+        };
+
+        // Add to array at the beginning
+        articles.unshift(newArticle);
+        
+        // Reset form and UI
+        e.target.reset();
+        currentFilter = 'All';
+        renderFilters();
+        renderArticles();
+        switchTab('read');
+    });
+
+    // Initial load
+    renderFilters();
+    renderArticles();
+</script>
+
+</body>
+</html>
