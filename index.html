@@ -14,10 +14,14 @@
     <script>
       CMS.init({
         config: {
+          site_url: 'https://elopiodelsur.netlify.app',
           backend: {
             name: 'github',
             repo: 'romencb/ElOpioDelSur',
-            branch: 'main'
+            branch: 'main',
+            base_url: 'https://api.netlify.com',
+            auth_endpoint: 'auth',
+            site_domain: 'elopiodelsur.netlify.app'
           },
           media_folder: 'images',
           public_folder: '/images',
@@ -35,6 +39,11 @@
               ]
             }
           ]
+        }
+      });
+    </script>
+  </body>
+</html>          ]
         }
       });
     </script>
