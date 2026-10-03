@@ -6,20 +6,18 @@
     <title>Content Manager</title>
   </head>
   <body>
-    <!-- This script prevents the CMS from looking for a config.yml file -->
     <script>
       window.CMS_MANUAL_INIT = true;
     </script>
-    <!-- Load Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     
-    <!-- Initialize the CMS with inline configuration -->
     <script>
       CMS.init({
         config: {
           backend: {
             name: 'github',
-            repo: 'romencb/ElOpioDelSur' // Change this to your actual username and repo
+            repo: 'romencb/ElOpioDelSur',
+            branch: 'main'
           },
           media_folder: 'images',
           public_folder: '/images',
