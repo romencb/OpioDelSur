@@ -4,9 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager</title>
+    <!-- This script creates the on-page login box -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
     <script>
+      Object.keys(localStorage).forEach(key => {
+        if (key.includes('draft')) localStorage.removeItem(key);
+      });
       window.CMS_MANUAL_INIT = true;
     </script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
@@ -14,14 +19,9 @@
     <script>
       CMS.init({
         config: {
-          site_url: 'https://elopiodelsur.netlify.app',
           backend: {
-            name: 'github',
-            repo: 'romencb/ElOpioDelSur',
-            branch: 'main',
-            base_url: 'https://api.netlify.com',
-            auth_endpoint: 'auth',
-            site_domain: 'elopiodelsur.netlify.app'
+            name: 'git-gateway',
+            branch: 'main'
           },
           media_folder: 'images',
           public_folder: '/images',
@@ -39,11 +39,6 @@
               ]
             }
           ]
-        }
-      });
-    </script>
-  </body>
-</html>          ]
         }
       });
     </script>
