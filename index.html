@@ -18,9 +18,14 @@
       CMS.init({
         config: {
           backend: {
-            name: 'proxy',
-            proxy_url: 'YOUR_UNIQUE_URL_FROM_DECAPBRIDGE',
-            branch: 'main'
+            name: 'github',
+            repo: 'romencb/ElOpioDelSur',
+            branch: 'main',
+            auth_type: 'pkce',
+            base_url: 'https://auth.decapbridge.com',
+            auth_endpoint: '/sites/9382f8ca-10e2-45ee-834a-68c6e79bbaee/pkce',
+            auth_token_endpoint: '/sites/9382f8ca-10e2-45ee-834a-68c6e79bbaee/token',
+            gateway_url: 'https://gateway.decapbridge.com'
           },
           media_folder: 'images',
           public_folder: '/images',
