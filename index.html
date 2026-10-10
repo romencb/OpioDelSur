@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager</title>
-    <!-- This script creates the on-page login box -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
     <script>
@@ -20,7 +18,8 @@
       CMS.init({
         config: {
           backend: {
-            name: 'git-gateway',
+            name: 'proxy',
+            proxy_url: 'YOUR_UNIQUE_URL_FROM_DECAPBRIDGE',
             branch: 'main'
           },
           media_folder: 'images',
