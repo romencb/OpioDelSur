@@ -7,8 +7,11 @@
   </head>
   <body>
     <script>
-      Object.keys(localStorage).forEach(key => {
-        if (key.includes('draft')) localStorage.removeItem(key);
+      // AGGRESSIVE CACHE WIPE: Destroys the corrupted ghost draft
+      localStorage.clear();
+      sessionStorage.clear();
+      ['netlify-cms-user', 'netlify-cms-drafts', 'localforage', 'decap-cms-user', 'decap-cms-drafts'].forEach(db => {
+        try { window.indexedDB.deleteDatabase(db); } catch(e) {}
       });
       window.CMS_MANUAL_INIT = true;
     </script>
@@ -17,6 +20,7 @@
     <script>
       CMS.init({
         config: {
+          site_url: 'https://elopiodelsur.netlify.app',
           backend: {
             name: 'github',
             repo: 'romencb/ElOpioDelSur',
